@@ -1,8 +1,23 @@
 import Head from 'next/head';
 
-// Gets called at build time
-export async function getStaticProps() {
-	const res = await fetch('https://pokeapi.co/api/v2/pokemon/bulbasaur');
+export async function getStaticPaths() {
+	const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+	const pokemons = await res.json();
+
+	let paths = pokemons.results.map((p) => {
+		return `/pokemon/${p.name}`;
+	});
+
+	return {
+		paths,
+		fallback: false,
+	};
+}
+
+export async function getStaticProps({ params }) {
+	const res = await fetch(
+		`https://pokeapi.co/api/v2/pokemon/${params.pokemon}`
+	);
 	const pokemon = await res.json();
 
 	return {
