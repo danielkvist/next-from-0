@@ -7,7 +7,7 @@ const Home = () => {
 
 	const handleClick = (e) => {
 		e.preventDefault();
-		router.push('/pokemon');
+		router.push('/pokemon/charmander');
 	};
 
 	return (
